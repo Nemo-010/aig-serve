@@ -1,0 +1,23 @@
+[package]
+name = "relay"
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.89"
+description = "Minimal passthrough proxy for real LLM providers, with cfrs as a supervised child"
+
+[[bin]]
+name = "relay"
+path = "src/main.rs"
+
+[dependencies]
+rustls = { version = "0.23", default-features = false, features = ["ring", "std", "tls12", "logging"] }
+webpki-roots = "0.26"
+serde_json = "1"
+libc = "0.2"
+
+[profile.release]
+opt-level = 3
+lto = true
+codegen-units = 1
+strip = true
+panic = "abort"

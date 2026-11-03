@@ -1,0 +1,18 @@
+# credentials and runtime state: never tracked
+keys.json
+keys.txt
+run/
+logs/
+*.log
+
+# build output
+target/
+__pycache__/
+*.pyc
+
+# generated from a live host; the template is tracked instead
+llmproxy/AGENT-TEST.md
+
+# editor and OS noise
+.DS_Store
+*.swp
