@@ -157,6 +157,22 @@ What costs:
 * `/metrics` and `/healthz` are public on the URL. Fine for a test rig; a
   real deployment would gate them.
 
+## 7b. Two caps, and which one a tester sees first
+
+The router has its own per-key limit (`max_inflight`, 128 in the shipped
+`keys.json`) and the edge has 200. A tester who opens 220 streams sees the
+**router's** 128 and concludes the edge cap is unmeasured. Measured both ways,
+same minute, same tunnel: **measured**
+
+| `max_inflight` | 220 streams: answered | the 429s came from |
+| --- | --- | --- |
+| 128 | 128 (92 refused) | the router: JSON body, `code: too_many_inflight`, `Retry-After: 1` |
+| 400 | 200 (20 refused) | the edge: empty body, `cf-int-tunnel-request-limit-hit: tunnel` |
+
+So to see the edge limit, raise the router's cap above 200 first. A client that
+reports "the router's 128" as the edge limit is reporting a true number about
+the wrong component.
+
 ## 8. Not tested
 
 Named tunnels (`--token`, `--credentials-file`) — no Cloudflare account
