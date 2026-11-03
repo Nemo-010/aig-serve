@@ -257,8 +257,10 @@ def main():
             ids = [m["id"] for m in json.loads(r["body"])["data"]]
         except Exception:
             pass
-        record("models", r["status"] == 200 and len(ids) == 4, status=r["status"], ms=r["total_ms"],
-               ids=",".join(ids))
+        standins = [i for i in ids if not i.startswith("real/")]
+        record("models", r["status"] == 200 and len(standins) == 4, status=r["status"],
+               ms=r["total_ms"], standins=",".join(standins),
+               real=len([i for i in ids if i.startswith("real/")]))
 
     if wanted("echo_nonstream"):
         r = call("standin-echo", msgs)

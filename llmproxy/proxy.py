@@ -223,7 +223,7 @@ def send_response(cs, status, obj=None, raw=None, extra=None, ctype="application
         pass
 
 
-PLAY = """<!doctype html><meta charset=utf-8><title>llm proxy playground</title>
+PLAY = r"""<!doctype html><meta charset=utf-8><title>llm proxy playground</title>
 <style>
 body{font:14px/1.6 ui-monospace,SFMono-Regular,monospace;max-width:52rem;margin:3rem auto;padding:0 1rem;color:#111}
 textarea{width:100%;min-height:7rem;font:inherit;padding:.6rem;box-sizing:border-box}
@@ -461,7 +461,8 @@ incrementally is what this test measures. Use
             for mid in real_models():
                 data.append({"id": REAL["prefix"] + mid, "object": "model",
                              "created": 1735689600, "owned_by": "real",
-                             "notes": "real upstream, billed per call"})
+                             "notes": "real upstream: billed per call, and the "
+                                      "key may allow only some ids"})
         send_response(self.cs, 200, {"object": "list", "data": data})
 
     def real_completion(self, key, path, body, req, want, upstream_id):
