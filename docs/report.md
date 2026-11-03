@@ -173,6 +173,26 @@ So to see the edge limit, raise the router's cap above 200 first. A client that
 reports "the router's 128" as the edge limit is reporting a true number about
 the wrong component.
 
+## 7c. What a client sees while the origin is restarting
+
+A client-side report recorded `/healthz` answering 200 during a router restart
+while POSTs got a Cloudflare 502, and read that as the tunnel masking an origin
+outage. Reproduced here: **disagree, measured**
+
+| Origin state | `/healthz` through the tunnel | POST through the tunnel |
+| --- | --- | --- |
+| router up | 200 | 200 |
+| router stopped | **502** at t+1, +2, +3 s | 502 |
+| router back | 200 | 200 |
+
+The edge does not serve a cached health answer: with the origin dead, both paths
+answer 502 within a second. A 200 during a restart is therefore not a cached
+page; it is more likely that the restart had finished, or that the two requests
+landed on different edge connections during the `--ha-connections 2` window (one
+connection still attached, one already failed). Worth saying so, because
+"healthz lies during a restart" would be a reason to distrust the probe, and
+that matters more than the truth of any one sample.
+
 ## 8. Not tested
 
 Named tunnels (`--token`, `--credentials-file`) — no Cloudflare account
