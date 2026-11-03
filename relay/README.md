@@ -56,13 +56,13 @@ must not have. The daemon owns the pid instead (cfrs issue #209).
 
 | Flag | Default | Meaning |
 | --- | --- | --- |
-| `--socket` | `/workspace/relay/run/relay.sock` | unix socket to listen on; `AF_INET` bind is `EACCES` on this host |
-| `--keys` | `/workspace/relay/keys.txt` | one caller token per line, `#` comments; mode 0600 |
+| `--socket` | `run/relay.sock` | unix socket to listen on; `AF_INET` bind is `EACCES` on this host |
+| `--keys` | `keys.txt` | one caller token per line, `#` comments; mode 0600 |
 | `--provider` | `kenari` | default provider for a bare model id |
 | `--cfrs` | `cfrs` | the binary to supervise |
-| `--url-file` | `.../run/url.txt` | the public URL, rewritten when it changes, removed when the tunnel dies |
-| `--pidfile` | `.../run/relay.pid` | flocked, so a second copy exits 75 |
-| `--logfile` | `.../logs/relay.log` | where the daemon sends stdout/stderr |
+| `--url-file` | `run/url.txt` | the public URL, rewritten when it changes, removed when the tunnel dies |
+| `--pidfile` | `run/relay.pid` | flocked, so a second copy exits 75 |
+| `--logfile` | `logs/relay.log` | where the daemon sends stdout/stderr |
 | `--no-tunnel` | off | listen only, start no tunnel |
 | `--no-forward` | off | do not expose the raw WebSocket endpoint |
 | `--daemon` | off | double fork, setsid, stdio to the log, pidfile locked |

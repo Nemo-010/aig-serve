@@ -33,13 +33,13 @@ fn usage() -> ! {
          \n\
          usage: relay [options]\n\
          \n\
-           --socket PATH      unix socket to listen on (default /run/relay.sock)\n\
-           --keys PATH        file of caller tokens, one per line\n\
+           --socket PATH      unix socket to listen on (default run/relay.sock)\n\
+           --keys PATH        file of caller tokens, one per line (default keys.txt)\n\
            --provider NAME    default provider for a bare model id (kenari|commandcode)\n\
            --cfrs PATH        cfrs binary (default: cfrs on PATH)\n\
-           --url-file PATH    write the public URL here\n\
-           --pidfile PATH     write the pid here\n\
-           --logfile PATH     where the daemon sends its log\n\
+           --url-file PATH    write the public URL here (default run/url.txt)\n\
+           --pidfile PATH     write the pid here (default run/relay.pid)\n\
+           --logfile PATH     where the daemon sends its log (default logs/relay.log)\n\
            --no-tunnel        do not start cfrs; listen only\n\
            --no-forward       do not expose the raw WebSocket endpoint\n\
            --daemon           detach and run in the background\n\
